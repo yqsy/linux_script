@@ -19,5 +19,5 @@ service docker start
 
 
 ## ~/.vimrc
-curl https://github.com/yqsy/linux_script/raw/master/.vimrc | tee ~/.vimrc
+curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.vimrc
 
