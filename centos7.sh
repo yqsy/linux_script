@@ -11,7 +11,7 @@ if ! rpm -qa | grep docker-engine; then
     yum -y install docker docker-registry
 fi
 systemctl enable docker.service
-
+systemctl start docker
 
 ## ~/.vimrc
 curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.vimrc
