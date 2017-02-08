@@ -7,9 +7,11 @@ yum install -y git
 LANG="en_US.utf8"
 
 
+
 # docker
 if ! rpm -qa | grep docker-engine; then
-    yum -y install docker docker-registry
+# DaoCloud script
+    curl -sSL https://get.daocloud.io/docker | sh
 fi
 systemctl enable docker.service
 systemctl start docker
