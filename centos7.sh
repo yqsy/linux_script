@@ -45,8 +45,3 @@ fi
 
 ## ~/.vimrc
 curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.vimrc
-
-
-iptables -F
-iptables -X
-iptables -Z
