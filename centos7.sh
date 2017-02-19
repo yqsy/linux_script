@@ -40,8 +40,8 @@ then
   # DaoCloud script
       curl -sSL https://get.daocloud.io/docker | sh
   fi
-  systemctl enable docker.service
-  systemctl start docker.service
+  systemctl enable docker
+  systemctl start docker
 fi
 
 ## ~/.vimrc
@@ -49,7 +49,7 @@ curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.
 
 
 augtool --autosave 'set /files/etc/ssh/sshd_config/Port 58888'
-systemctl restart sshd.service
+systemctl restart sshd
 
 iptables -F
 iptables -X
