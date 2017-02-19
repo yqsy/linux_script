@@ -51,26 +51,26 @@ curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.
 augtool --autosave 'set /files/etc/ssh/sshd_config/Port 58888'
 systemctl restart sshd.service
 
-iptables -F
-iptables -X
-iptables -Z
-
-# ssh 58888  shadowsocks 8989  kcp 29900
-
-iptables -P INPUT DROP
-iptables -P FORWARD ACCEPT
-iptables -P OUTPUT ACCEPT
-
-# syn attack
-iptables -A INPUT -p tcp --syn -m limit --limit 100/s --limit-burst 100 -j ACCEPT
-
-# ping attack
-iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 10/s --limit-burst 5 -j ACCEPT
-
-# scan port attack
-iptables -A INPUT -p tcp -m tcp --tcp-flags SYN,RST,ACK SYN -m limit --limit 20/s --limit-burst 200 -j ACCEPT
-
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A INPUT -p udp -j ACCEPT
-iptables -A INPUT -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A INPUT -p tcp -m multiport --dports 58888,80,8989 -m state --state New -j ACCEPT
+# iptables -F
+# iptables -X
+# iptables -Z
+#
+# # ssh 58888  shadowsocks 8989  kcp 29900
+#
+# iptables -P INPUT DROP
+# iptables -P FORWARD ACCEPT
+# iptables -P OUTPUT ACCEPT
+#
+# # syn attack
+# iptables -A INPUT -p tcp --syn -m limit --limit 100/s --limit-burst 100 -j ACCEPT
+#
+# # ping attack
+# iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 10/s --limit-burst 5 -j ACCEPT
+#
+# # scan port attack
+# iptables -A INPUT -p tcp -m tcp --tcp-flags SYN,RST,ACK SYN -m limit --limit 20/s --limit-burst 200 -j ACCEPT
+#
+# iptables -A INPUT -i lo -j ACCEPT
+# iptables -A INPUT -p udp -j ACCEPT
+# iptables -A INPUT -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT
+# iptables -A INPUT -p tcp -m multiport --dports 58888,80,8989 -m state --state New -j ACCEPT
