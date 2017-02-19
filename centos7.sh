@@ -29,22 +29,6 @@ yum install -y iperf3
 yum install -y augeas
 LANG="en_US.utf8"
 
-# # python 2.6 for denyhosts
-# if ! ls /usr/local/bin | grep python2.6; then
-#     wget https://www.python.org/ftp/python/2.6.8/Python-2.6.8.tgz
-#     tar xzf Python-2.6.8.tgz
-#     cd Python-2.6.8
-#     ./configure
-#     make altinstall
-#     cd ..
-#     rm -rf Python-2.6.8
-#     rm -rf Python-2.6.8.tgz
-# fi
-#
-# # denyhosts
-# yum install -y denyhosts
-# systemctl enable denyhosts.service
-# systemctl start denyhosts.service
 
 # docker
 # https://docs.docker.com/datacenter/ucp/1.1/installation/system-requirements/
