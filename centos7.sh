@@ -8,7 +8,6 @@ echo "kernel_full: $kernel_full"
 echo "kernel_version: $kernel_version"
 echo "machine: $machine"
 echo "release_version: $release_version"
-echo "ssh port will be changed to 58888"
 echo "====================================="
 
 if ! echo $release_version | grep CentOS | grep 7.3; then
@@ -47,10 +46,6 @@ fi
 ## ~/.vimrc
 curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.vimrc
 
-
-augtool --autosave 'set /files/etc/ssh/sshd_config/Port 58888'
-semanage port -a -t ssh_port_t -p tcp 58888
-systemctl restart sshd.service
 
 iptables -F
 iptables -X
