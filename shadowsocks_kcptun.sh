@@ -1,0 +1,18 @@
+docker run -d --restart=always \
+-e "SS_PORT=8989" \
+-e "SS_PASSWORD=m" \
+-e "SS_METHOD=aes-256-cfb" \
+-e "SS_TIMEOUT=300" \
+-e "KCP_PORT=29900" \
+-e "KCP_KEY=123456" \
+-e "KCP_CRYPT=aes" \
+-e "KCP_MODE=fast2" \
+-e "MTU=1350" \
+-e "SNDWND=1024" \
+-e "RCVWND=1024" \
+-e "DATASHARD=10" \
+-e "PARITYSHARD=3" \
+-p 8989:8989 \
+-p 8989:8989/udp \
+-p 29900:29900/udp \
+--name ssserver imhang/kcp-shadowsocks-docker
