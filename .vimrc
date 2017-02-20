@@ -9,4 +9,4 @@ set shiftwidth=4
 set smartindent
 set smarttab
 set softtabstop=4
-
+set encoding=utf-8
