@@ -15,23 +15,34 @@ if ! echo $release_version | grep CentOS; then
   exit 1
 fi
 
-#basic
-yum update -y
-yum install -y vim
-yum install -y net-tools
-yum install -y curl
-yum install -y git
-yum install -y gcc
+yum install -y wget
+localectl set-locale LANG=en_US.UTF-8
+echo export LC_ALL=en_US.UTF-8 >> ~/.bashrc
 
+echo -n "Need China repos? >"
+read -p "(default: no) yes or no" china_repos
+echo "You Enter: $china_rep"
+
+# repos
+if [ "$china_repos" == "yes" ]
+then
+  mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+  wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS7-Base-163.repo
+  yum clean all
+  yum makecache
+fi
+
+yum update -y
+
+# epel repos
 yum install -y epel-release
+
+#basic
+yum install -y vim
+yum install -y curl net-tools
+yum install -y git gcc gcc-c++
 yum install -y iperf3
 yum install -y augeas
-
-localectl set-locale LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-echo export LC_ALL=en_US.UTF-8 >> ~/.bashrc
 
 # docker
 # https://docs.docker.com/datacenter/ucp/1.1/installation/system-requirements/
@@ -40,11 +51,17 @@ if [ $kernel_version \> '3.10' ] ||
    [ $kernel_version = '3.10' ]
 then
   if ! rpm -qa | grep docker-engine; then
-  # DaoCloud script
-      curl -sSL https://get.daocloud.io/docker | sh
+    yum install -y docker
   fi
   systemctl enable docker.service
   systemctl start docker.service
+
+  # docker repos
+  if [ "$china_repos" == "yes" ]
+  then
+    curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://0541a772.m.daocloud.io &&
+    systemctl restart docker
+  fi
 fi
 
 ## ~/.vimrc
