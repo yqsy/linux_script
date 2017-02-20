@@ -21,7 +21,7 @@ echo export LC_ALL=en_US.UTF-8 >> ~/.bashrc
 
 echo -n "Need China repos? >"
 read -p "(default: no) yes or no" china_repos
-echo "You Enter: $china_rep"
+echo "You Enter: $china_repos"
 
 # repos
 if [ "$china_repos" == "yes" ]
