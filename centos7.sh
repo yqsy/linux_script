@@ -10,8 +10,8 @@ echo "machine: $machine"
 echo "release_version: $release_version"
 echo "====================================="
 
-if ! echo $release_version | grep CentOS | grep 7.3; then
-  echo "Now only support CentOS Linux release 7.3.1611"
+if ! echo $release_version | grep CentOS; then
+  echo "Now only support CentOS Linux release"
   exit 1
 fi
 
