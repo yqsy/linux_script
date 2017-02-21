@@ -40,9 +40,13 @@ yum install -y epel-release
 #basic
 yum install -y vim
 yum install -y curl net-tools
-yum install -y git gcc gcc-c++
+yum install -y git gcc gcc-c++ python34
 yum install -y iperf3
 yum install -y augeas
+
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+rm -rf get-pip.py
 
 # docker
 # https://docs.docker.com/datacenter/ucp/1.1/installation/system-requirements/
