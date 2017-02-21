@@ -39,7 +39,7 @@ yum install -y epel-release
 
 #basic
 yum install -y vim
-yum install -y curl net-tools
+yum install -y curl net-tools telnet
 yum install -y git gcc gcc-c++ python34
 yum install -y iperf3
 yum install -y augeas
