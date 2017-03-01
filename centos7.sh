@@ -17,7 +17,7 @@ fi
 
 
 iptables -F
-iptables -X 
+iptables -X
 iptables -Z
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
@@ -48,7 +48,7 @@ yum install -y epel-release
 #basic
 yum install -y vim
 yum install -y curl net-tools telnet
-yum install -y git gcc gcc-c++ python34 autoconf libtool cmake clang
+yum install -y git gcc gcc-c++ gdb python34 autoconf libtool cmake clang
 yum install -y iperf3  tcpdump
 yum install -y augeas
 
