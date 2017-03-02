@@ -56,6 +56,8 @@ wget https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 rm -rf get-pip.py
 
+pip install conan
+
 # docker
 # https://docs.docker.com/datacenter/ucp/1.1/installation/system-requirements/
 # Linux kernel version 3.10 or higher
