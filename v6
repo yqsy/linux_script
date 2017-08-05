@@ -1,12 +1,12 @@
 *filter
 
 -A INPUT -i io -j ACCEPT
--A INPUT -p icmp --icmp-type 8 -m state --state NEW -j ACCEPT
--A INPUT -p tcp --dport 22 -m state --state NEW -j ACCEPT
+-A INPUT -p icmpv6 -j ACCEPT
 -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
 -A INPUT -p tcp --dport 443 -m state --state NEW -j ACCEPT
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 -P INPUT DROP
+-P FORWARD DROP
 
 COMMIT
 # Completed
