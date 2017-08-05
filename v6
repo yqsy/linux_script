@@ -1,6 +1,6 @@
 *filter
 
--A INPUT -i io -j ACCEPT
+-A INPUT -i lo -j ACCEPT
 -A INPUT -p icmpv6 -j ACCEPT
 -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
 -A INPUT -p tcp --dport 443 -m state --state NEW -j ACCEPT

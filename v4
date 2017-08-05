@@ -1,6 +1,6 @@
 *filter
 
--A INPUT -i io -j ACCEPT
+-A INPUT -i lo -j ACCEPT
 -A INPUT -p icmp --icmp-type 8 -m state --state NEW -j ACCEPT
 -A INPUT -p tcp --dport 22 -m state --state NEW -j ACCEPT
 -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
