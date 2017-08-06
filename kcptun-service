@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+import os
+import subprocess
+import time
+import json
+
+USAGE = 'Usage:sudo /etc/init.d/kcptun-service {start, stop, restart}'
+
+if len(sys.argv) != 2:
+    sys.exit(USAGE)
+
+
+OP = sys.argv[1]
+
+
+class KcptunConfig():
+    def __init__(self):
+        self.localaddr = ':12948'
+        self.remoteaddr = 'vps:29900'
+        self.key = 'key'
+        self.crypt = 'none'
+        self.mode = 'fast2'
+        self.conn = '1'
+        self.autoexpire = '0'
+        self.scavengettl = '600'
+        self.mtu = '1350'
+        self.sndwnd = '512'
+        self.rcvwnd = '512'
+        self.datashard = '10'
+        self.parityshard = '3'
+        self.dscp = '0'
+        self.nocomp = 'false'
+        self.snmplog = ''
+        self.snmpperiod = '60'
+        self.log = ''
+
+
+KCPTUN_CONFIG = KcptunConfig()
+
+PIDFILE = '/var/run/kcptun-service.pid'
+CONFIGFILE = '/usr/local/etc/kcptun-service-config.json'
+EXECFILE = '/usr/local/bin/client_linux_arm5'
+
+def start():
+    if not os.path.exists(EXECFILE):
+        sys.exit('{} is not exist'.format(EXECFILE))
+
+    if not os.path.exists(CONFIGFILE):
+        open(CONFIGFILE, 'w').write(json.dumps(KCPTUN_CONFIG.__dict__, indent=4))
+        sys.exit('{} is not exist, now create, please config it'.format(CONFIGFILE))
+
+    with open(CONFIGFILE) as config_file:
+        KCPTUN_CONFIG = json.load(config_file)
+
+    print KCPTUN_CONFIG.remoteaddr 
+
+    if os.path.exists(PIDFILE):
+        print 'kcptun-service has been running | pid: {} '.format(open(PIDFILE).readline()), 'continue?(y/n)'
+        k = raw_input()
+        if not k in ('Y', 'y'):
+            sys.exit(1)
+
+
+    p = subprocess.Popen(['sleep', '100'], stdout=subprocess.PIPE)
+
+    pid = p.pid
+    open(PIDFILE, 'w').write('{}'.format(pid))
+    print ' | '.join(['start ok', 'pid: {}'.format(pid)])
+
+
+def stop():
+    print 'stop'
+
+def restart():
+    print 'restart'
+
+
+ops = {'start':start, 'stop':stop, 'restart':restart}
+
+
+if __name__ == '__main__':
+    if not OP in (ops.keys()):
+        sys.exit(USAGE)
+    ops[OP]()
