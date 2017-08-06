@@ -55,10 +55,10 @@ def start():
     with open(CONFIGFILE) as config_file:
         KCPTUN_CONFIG = json.load(config_file)
 
-    print KCPTUN_CONFIG.remoteaddr 
+    #print(KCPTUN_CONFIG.remoteaddr)
 
     if os.path.exists(PIDFILE):
-        print 'kcptun-service has been running | pid: {} '.format(open(PIDFILE).readline()), 'continue?(y/n)'
+        print('kcptun-service has been running | pid: {} '.format(open(PIDFILE).readline()), 'continue?(y/n)')
         k = raw_input()
         if not k in ('Y', 'y'):
             sys.exit(1)
@@ -68,14 +68,14 @@ def start():
 
     pid = p.pid
     open(PIDFILE, 'w').write('{}'.format(pid))
-    print ' | '.join(['start ok', 'pid: {}'.format(pid)])
+    print(' | '.join(['start ok', 'pid: {}'.format(pid)]))
 
 
 def stop():
-    print 'stop'
+    print('stop')
 
 def restart():
-    print 'restart'
+    print('restart')
 
 
 ops = {'start':start, 'stop':stop, 'restart':restart}
