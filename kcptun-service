@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import sys
@@ -6,6 +6,7 @@ import os
 import subprocess
 import time
 import json
+
 
 USAGE = 'Usage:sudo /etc/init.d/kcptun-service {start, stop, restart}'
 
@@ -18,24 +19,28 @@ OP = sys.argv[1]
 
 class KcptunConfig():
     def __init__(self):
-        self.localaddr = ':12948'
-        self.remoteaddr = 'vps:29900'
-        self.key = 'key'
-        self.crypt = 'none'
-        self.mode = 'fast2'
-        self.conn = '1'
-        self.autoexpire = '0'
-        self.scavengettl = '600'
-        self.mtu = '1350'
-        self.sndwnd = '512'
-        self.rcvwnd = '512'
-        self.datashard = '10'
-        self.parityshard = '3'
-        self.dscp = '0'
-        self.nocomp = 'false'
-        self.snmplog = ''
-        self.snmpperiod = '60'
-        self.log = ''
+            self.localaddr = ':12948'
+            self.remoteaddr = 'vps:29900'
+            self.key = 'key'
+            self.crypt = 'none'
+            self.mode = 'fast2'
+            self.conn = '1'
+            self.autoexpire = '0'
+            self.scavengettl = '600'
+            self.mtu = '1350'
+            self.sndwnd = '512'
+            self.rcvwnd = '512'
+            self.datashard = '10'
+            self.parityshard = '3'
+            self.dscp = '0'
+            self.nocomp = 'false'
+            self.snmplog = ''
+            self.snmpperiod = '60'
+            self.log = ''
+
+
+    def read_from_json(self, j):
+        self.__dict__ = json.loads(j)
 
 
 KCPTUN_CONFIG = KcptunConfig()
@@ -49,20 +54,20 @@ def start():
         sys.exit('{} is not exist'.format(EXECFILE))
 
     if not os.path.exists(CONFIGFILE):
-        open(CONFIGFILE, 'w').write(json.dumps(KCPTUN_CONFIG.__dict__, indent=4))
+        str = json.dumps(KCPTUN_CONFIG.__dict__, indent=4)
+        open(CONFIGFILE, 'w').write(str)
         sys.exit('{} is not exist, now create, please config it'.format(CONFIGFILE))
 
     with open(CONFIGFILE) as config_file:
-        KCPTUN_CONFIG = json.load(config_file)
+        KCPTUN_CONFIG.read_from_json(config_file.read())
 
-    #print(KCPTUN_CONFIG.remoteaddr)
+    print(KCPTUN_CONFIG.__dict__)
 
     if os.path.exists(PIDFILE):
         print('kcptun-service has been running | pid: {} '.format(open(PIDFILE).readline()), 'continue?(y/n)')
-        k = raw_input()
+        k = input()
         if not k in ('Y', 'y'):
             sys.exit(1)
-
 
     p = subprocess.Popen(['sleep', '100'], stdout=subprocess.PIPE)
 
