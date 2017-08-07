@@ -32,16 +32,25 @@ class KcptunConfig():
             self.rcvwnd = '512'
             self.datashard = '10'
             self.parityshard = '3'
-            self.dscp = '0'
             self.nocomp = 'false'
-            self.snmplog = ''
-            self.snmpperiod = '60'
-            self.log = ''
 
 
     def read_from_json(self, j):
         self.__dict__ = json.loads(j)
 
+    def get_run_params(self):
+        params = []
+
+        for key,value in self.__dict__.items():
+            if value:
+                if key == 'nocomp':
+                    if value == 'true':
+                        params.append('--{}'.format(key))
+                    continue
+                params.append('--{}'.format(key))
+                params.append(value)
+
+        return params
 
 KCPTUN_CONFIG = KcptunConfig()
 
@@ -61,15 +70,16 @@ def start():
     with open(CONFIGFILE) as config_file:
         KCPTUN_CONFIG.read_from_json(config_file.read())
 
-    print(KCPTUN_CONFIG.__dict__)
-
     if os.path.exists(PIDFILE):
         print('kcptun-service has been running | pid: {} '.format(open(PIDFILE).readline()), 'continue?(y/n)')
         k = input()
         if not k in ('Y', 'y'):
             sys.exit(1)
 
-    p = subprocess.Popen(['sleep', '100'], stdout=subprocess.PIPE)
+    run_params = KCPTUN_CONFIG.get_run_params()
+    run_params.insert(0, EXECFILE)
+
+    p = subprocess.Popen(run_params, stdout=subprocess.PIPE)
 
     pid = p.pid
     open(PIDFILE, 'w').write('{}'.format(pid))
@@ -77,7 +87,15 @@ def start():
 
 
 def stop():
-    print('stop')
+    pid = open(PIDFILE).readline()
+    print('stoping kcptun-service | pid: {}'.format(pid))
+    if pid:
+        if subprocess.call(['kill ' + pid], shell = True) == 0:
+            print(' | '.join(['stop ok', 'pid:{}'.format(pid)]))
+            if subprocess.call(['rm ' + PIDFILE], shell=True) != 0:
+                print('delete permission denied')
+    else:
+        print('stop error')
 
 def restart():
     print('restart')
