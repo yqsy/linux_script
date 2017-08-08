@@ -50,6 +50,7 @@ KCPTUN_CONFIG = KcptunConfig()
 PIDFILE = '/var/run/kcptun-service.pid'
 CONFIGFILE = '/usr/local/etc/kcptun-service-config.json'
 EXECFILE = '/usr/local/bin/client_linux_arm5'
+LOGFILE = '/var/log/kcptun-service.log'
 
 
 def start():
@@ -73,11 +74,11 @@ def start():
 
     print(run_params)
 
-    p = subprocess.Popen(run_params, stdout=subprocess.PIPE)
-
-    pid = p.pid
-    open(PIDFILE, 'w').write('{}'.format(pid))
-    print(' | '.join(['start ok', 'pid: {}'.format(pid)]))
+    with open(LOGFILE, 'w') as log:
+        p = subprocess.Popen(run_params, stdout=log, stderr=log)
+        pid = p.pid
+        open(PIDFILE, 'w').write('{}'.format(pid))
+        print(' | '.join(['start ok', 'pid: {}'.format(pid)]))
 
 
 def stop():
