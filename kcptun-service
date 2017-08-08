@@ -72,13 +72,14 @@ def start():
     run_params = KCPTUN_CONFIG.get_run_params()
     run_params.insert(0, EXECFILE)
 
-    print(run_params)
+    print('start_params: {}'.format(run_params))
 
     with open(LOGFILE, 'w') as log:
         p = subprocess.Popen(run_params, stdout=log, stderr=log)
         pid = p.pid
         open(PIDFILE, 'w').write('{}'.format(pid))
-        print(' | '.join(['start ok', 'pid: {}'.format(pid)]))
+        print(' | '.join(['start ok', 'pid: {}'.format(pid),
+                          'logfile: {}'.format(LOGFILE)]))
 
 
 def stop():

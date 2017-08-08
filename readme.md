@@ -36,3 +36,22 @@ wget https://raw.githubusercontent.com/yqsy/linux_script/master/v6 -O /tmp/v6
 iptables-restore < /tmp/v4
 ip6tables-restore < /tmp/v6
 ```
+
+# 树莓派kcptun-service搭建
+```
+cd ~
+wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-arm-20170525.tar.gz
+mkdir kcptun-linux-arm-20170525
+tar -zxvf kcptun-linux-arm-20170525.tar.gz -C ./kcptun-linux-arm-20170525
+sudo cp ./kcptun-linux-arm-20170525/client_linux_arm5 /usr/local/bin/
+sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service-config.json -O /usr/local/etc/kcptun-service-config.json
+sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service -O /etc/init.d/kcptun-service
+
+```
+
+```
+sudo /etc/init.d/kcptun-service start
+sudo /etc/init.d/kcptun-service stop
+sudo /etc/init.d/kcptun-service restart
+
+```
