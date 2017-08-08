@@ -6,6 +6,7 @@ import os
 import subprocess
 import time
 import json
+from collections import OrderedDict
 
 # TODO:
 # 1. class与json转换
@@ -23,25 +24,25 @@ OP = sys.argv[1]
 
 class KcptunConfig():
     def __init__(self):
-        pass
+        self.config = []
 
     def read_from_json(self, j):
-        self.__dict__ = json.loads(j)
+        self.config = json.loads(j, object_pairs_hook=OrderedDict)
 
     def get_run_params(self):
         params = []
 
-        for key, value in self.__dict__.items():
-            if value:
-                if key == 'nocomp':
-                    if value == 'true':
-                        params.append('--{}'.format(key))
+        for key,value in self.config.items():
+            if key == 'nocomp':
+                if value == 'true':
+                    params.append('--nocomp')
+                else:
                     continue
-                params.append('--{}'.format(key))
-                params.append(value)
+
+            params.append('--{}'.format(key))
+            params.append(value)
 
         return params
-
 
 KCPTUN_CONFIG = KcptunConfig()
 
@@ -69,11 +70,13 @@ def start():
     run_params = KCPTUN_CONFIG.get_run_params()
     run_params.insert(0, EXECFILE)
 
-    p = subprocess.Popen(run_params, stdout=subprocess.PIPE)
+    print(run_params)
 
-    pid = p.pid
-    open(PIDFILE, 'w').write('{}'.format(pid))
-    print(' | '.join(['start ok', 'pid: {}'.format(pid)]))
+    # p = subprocess.Popen(run_params, stdout=subprocess.PIPE)
+    #
+    # pid = p.pid
+    # open(PIDFILE, 'w').write('{}'.format(pid))
+    # print(' | '.join(['start ok', 'pid: {}'.format(pid)]))
 
 
 def stop():
