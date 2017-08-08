@@ -1,3 +1,8 @@
+# vimrc
+```
+curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.vimrc
+```
+
 # iptables v4/v6 
 
 在centos7上,需要firewalld与开启iptables
