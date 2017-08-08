@@ -32,7 +32,7 @@ class KcptunConfig():
     def get_run_params(self):
         params = []
 
-        for key,value in self.config.items():
+        for key, value in self.config.items():
             if key == 'nocomp':
                 if value == 'true':
                     params.append('--nocomp')
@@ -43,6 +43,7 @@ class KcptunConfig():
             params.append(value)
 
         return params
+
 
 KCPTUN_CONFIG = KcptunConfig()
 
