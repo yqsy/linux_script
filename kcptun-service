@@ -18,27 +18,25 @@ USAGE = 'Usage:sudo /etc/init.d/kcptun-service {start, stop, restart}'
 if len(sys.argv) != 2:
     sys.exit(USAGE)
 
-
 OP = sys.argv[1]
 
 
 class KcptunConfig():
     def __init__(self):
-            self.localaddr = ':12948'
-            self.remoteaddr = 'vps:29900'
-            self.key = 'key'
-            self.crypt = 'none'
-            self.mode = 'fast2'
-            self.conn = '1'
-            self.autoexpire = '0'
-            self.scavengettl = '600'
-            self.mtu = '1350'
-            self.sndwnd = '512'
-            self.rcvwnd = '512'
-            self.datashard = '10'
-            self.parityshard = '3'
-            self.nocomp = 'false'
-
+        self.localaddr = ':12948'
+        self.remoteaddr = 'vps:29900'
+        self.key = 'key'
+        self.crypt = 'none'
+        self.mode = 'fast2'
+        self.conn = '1'
+        self.autoexpire = '0'
+        self.scavengettl = '600'
+        self.mtu = '1350'
+        self.sndwnd = '512'
+        self.rcvwnd = '512'
+        self.datashard = '10'
+        self.parityshard = '3'
+        self.nocomp = 'false'
 
     def read_from_json(self, j):
         self.__dict__ = json.loads(j)
@@ -46,7 +44,7 @@ class KcptunConfig():
     def get_run_params(self):
         params = []
 
-        for key,value in self.__dict__.items():
+        for key, value in self.__dict__.items():
             if value:
                 if key == 'nocomp':
                     if value == 'true':
@@ -57,11 +55,13 @@ class KcptunConfig():
 
         return params
 
+
 KCPTUN_CONFIG = KcptunConfig()
 
 PIDFILE = '/var/run/kcptun-service.pid'
 CONFIGFILE = '/usr/local/etc/kcptun-service-config.json'
 EXECFILE = '/usr/local/bin/client_linux_arm5'
+
 
 def start():
     if not os.path.exists(EXECFILE):
@@ -95,19 +95,19 @@ def stop():
     pid = open(PIDFILE).readline()
     print('stoping kcptun-service | pid: {}'.format(pid))
     if pid:
-        if subprocess.call(['kill ' + pid], shell = True) == 0:
+        if subprocess.call(['kill ' + pid], shell=True) == 0:
             print(' | '.join(['stop ok', 'pid:{}'.format(pid)]))
             if subprocess.call(['rm ' + PIDFILE], shell=True) != 0:
                 print('delete permission denied')
     else:
         print('stop error')
 
+
 def restart():
     print('restart')
 
 
-ops = {'start':start, 'stop':stop, 'restart':restart}
-
+ops = {'start': start, 'stop': stop, 'restart': restart}
 
 if __name__ == '__main__':
     if not OP in (ops.keys()):
