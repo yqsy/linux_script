@@ -9,9 +9,7 @@ import json
 from collections import OrderedDict
 
 # TODO:
-# 1. class与json转换
-# 2. restart
-# 3. status
+# status
 
 
 USAGE = 'Usage:sudo /etc/init.d/kcptun-service {start, stop, restart}'
