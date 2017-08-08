@@ -5,14 +5,14 @@ curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.
 
 # iptables v4/v6 
 
-ÔÚcentos7ÉÏ,ĞèÒªfirewalldÓë¿ªÆôiptables
+åœ¨centos7ä¸Š,éœ€è¦firewalldä¸å¼€å¯iptables
 ```
 sudo systemctl stop firewalld.service && sudo systemctl disable firewalld.service
 sudo systemctl enable iptables && sudo systemctl enable ip6tables
 sudo systemctl start iptables && sudo systemctl start ip6tables
 ```
 
-Çå¿ÕËùÓĞ¹æÔò
+æ¸…ç©ºæ‰€æœ‰è§„åˆ™
 ```
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
@@ -28,7 +28,7 @@ iptables -t raw -F
 iptables -t raw -X
 ```
 
-Ğ´ÈëÄ¬ÈÏµÄ¹æÔò
+å†™å…¥é»˜è®¤çš„è§„åˆ™
 ```
 rm -f /tmp/{v4,v6}
 wget https://raw.githubusercontent.com/yqsy/linux_script/master/v4 -O /tmp/v4
