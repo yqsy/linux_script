@@ -73,11 +73,11 @@ def start():
 
     print(run_params)
 
-    # p = subprocess.Popen(run_params, stdout=subprocess.PIPE)
-    #
-    # pid = p.pid
-    # open(PIDFILE, 'w').write('{}'.format(pid))
-    # print(' | '.join(['start ok', 'pid: {}'.format(pid)]))
+    p = subprocess.Popen(run_params, stdout=subprocess.PIPE)
+
+    pid = p.pid
+    open(PIDFILE, 'w').write('{}'.format(pid))
+    print(' | '.join(['start ok', 'pid: {}'.format(pid)]))
 
 
 def stop():
