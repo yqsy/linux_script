@@ -23,20 +23,7 @@ OP = sys.argv[1]
 
 class KcptunConfig():
     def __init__(self):
-        self.localaddr = ':12948'
-        self.remoteaddr = 'vps:29900'
-        self.key = 'key'
-        self.crypt = 'none'
-        self.mode = 'fast2'
-        self.conn = '1'
-        self.autoexpire = '0'
-        self.scavengettl = '600'
-        self.mtu = '1350'
-        self.sndwnd = '512'
-        self.rcvwnd = '512'
-        self.datashard = '10'
-        self.parityshard = '3'
-        self.nocomp = 'false'
+        pass
 
     def read_from_json(self, j):
         self.__dict__ = json.loads(j)
@@ -68,9 +55,7 @@ def start():
         sys.exit('{} is not exist'.format(EXECFILE))
 
     if not os.path.exists(CONFIGFILE):
-        str = json.dumps(KCPTUN_CONFIG.__dict__, indent=4)
-        open(CONFIGFILE, 'w').write(str)
-        sys.exit('{} is not exist, now create, please config it'.format(CONFIGFILE))
+        sys.exit('{} is not exist, please create it'.format(CONFIGFILE))
 
     with open(CONFIGFILE) as config_file:
         KCPTUN_CONFIG.read_from_json(config_file.read())
