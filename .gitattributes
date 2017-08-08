@@ -1,2 +1,5 @@
-v4,v6,kcptun-service,.vimrc text eol=lf
+v4 text eol=lf
+v6 text eol=lf
+kcptun-service text eol=lf
+.vimrc text eol=lf
 *.json text eol=lf
