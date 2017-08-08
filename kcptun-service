@@ -94,7 +94,8 @@ def stop():
 
 
 def restart():
-    print('restart')
+    stop()
+    start()
 
 
 ops = {'start': start, 'stop': stop, 'restart': restart}
