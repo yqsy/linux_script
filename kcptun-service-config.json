@@ -1,0 +1,16 @@
+{
+    "localaddr": ":12948",
+    "remoteaddr": "vps:3389",
+    "crypt": "none",
+    "key": "key",
+    "mode": "fast2",
+    "sndwnd": "512",
+    "rcvwnd": "512",
+    "parityshard": "3",
+    "datashard": "10",
+    "nocomp": "false",
+    "mtu": "1350",
+    "autoexpire": "0",
+    "conn": "1",
+    "scavengettl": "600"
+}
