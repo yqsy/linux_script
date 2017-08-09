@@ -46,8 +46,8 @@ class KcptunConfig():
 KCPTUN_CONFIG = KcptunConfig()
 
 PIDFILE = '/var/run/kcptun-service.pid'
-CONFIGFILE = '/usr/local/etc/kcptun-service-config.json'
 EXECFILE = '/usr/local/bin/client_linux_arm5'
+CONFIGFILE = '/usr/local/etc/kcptun-service-config.json'
 LOGFILE = '/var/log/kcptun-service.log'
 
 
