@@ -6,7 +6,7 @@
     "mode": "fast2",
     "conn": "1",
     "autoexpire": "0",
-    "scavengettl": "600"
+    "scavengettl": "600",
     "mtu": "1350",
     "sndwnd": "512",
     "rcvwnd": "512",
