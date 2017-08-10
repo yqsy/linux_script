@@ -62,4 +62,5 @@ sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-serv
 sudo /etc/init.d/kcptun-service start
 sudo /etc/init.d/kcptun-service stop
 sudo /etc/init.d/kcptun-service restart
+chkconfig kcptun-service on
 ```
