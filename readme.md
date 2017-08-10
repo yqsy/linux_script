@@ -8,6 +8,7 @@ curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.
 在centos7上,需要firewalld与开启iptables
 ```
 sudo systemctl stop firewalld.service && sudo systemctl disable firewalld.service
+yum install -y iptables-services
 sudo systemctl enable iptables && sudo systemctl enable ip6tables
 sudo systemctl start iptables && sudo systemctl start ip6tables
 ```
