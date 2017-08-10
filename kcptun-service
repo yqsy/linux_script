@@ -1,6 +1,16 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+### BEGIN INIT INFO
+# Provides:          kcptun-service
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start daemon at boot time
+# Description:       Enable service provided by daemon.
+### END INIT INFO
+
 import sys
 import os
 import subprocess
@@ -62,10 +72,7 @@ def start():
         KCPTUN_CONFIG.read_from_json(config_file.read())
 
     if os.path.exists(PIDFILE):
-        print('kcptun-service has been running | pid: {} '.format(open(PIDFILE).readline()), 'continue?(y/n)')
-        k = input()
-        if not k in ('Y', 'y'):
-            sys.exit(1)
+        stop()
 
     run_params = KCPTUN_CONFIG.get_run_params()
     run_params.insert(0, EXECFILE)
