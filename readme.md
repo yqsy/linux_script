@@ -63,4 +63,32 @@ sudo /etc/init.d/kcptun-service start
 sudo /etc/init.d/kcptun-service stop
 sudo /etc/init.d/kcptun-service restart
 chkconfig kcptun-service on
+
+systemctl status kcptun-service.service
 ```
+
+# vps shadowsocks-libev搭建
+
+```
+yum install gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel libsodium-devel mbedtls-devel -y
+wget https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.0.8/shadowsocks-libev-3.0.8.tar.gz
+tar -zxvf shadowsocks-libev-3.0.8.tar.gz
+cd shadowsocks-libev-3.0.8
+./configure --prefix=/usr && make
+make install
+mkdir -p /etc/shadowsocks-libev
+cp ./rpm/SOURCES/etc/init.d/shadowsocks-libev /etc/init.d/shadowsocks-libev
+cp ./debian/config.json /etc/shadowsocks-libev/config.json
+chmod +x /etc/init.d/shadowsocks-libev
+vim /etc/shadowsocks-libev/config.json
+
+```
+
+```
+chkconfig --add shadowsocks-libev
+chkconfig shadowsocks-libev on
+/etc/init.d/shadowsocks-libev start
+
+systemctl status shadowsocks-libev.service
+```
+
