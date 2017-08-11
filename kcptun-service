@@ -18,7 +18,7 @@ import json
 from collections import OrderedDict
 
 PROGRAME = 'kcptun-service'
-USAGE = 'Usage:sudo /etc/init.d/{} {start, stop, restart}'.format(PROGRAME)
+USAGE = 'Usage:sudo /etc/init.d/{} {{start, stop, restart}}'.format(PROGRAME)
 
 if len(sys.argv) != 2:
     sys.exit(USAGE)
