@@ -17,7 +17,8 @@ import subprocess
 import json
 from collections import OrderedDict
 
-USAGE = 'Usage:sudo /etc/init.d/kcptun-service {start, stop, restart}'
+PROGRAME = 'kcptun-service'
+USAGE = 'Usage:sudo /etc/init.d/{} {start, stop, restart}'.format(PROGRAME)
 
 if len(sys.argv) != 2:
     sys.exit(USAGE)
@@ -84,7 +85,7 @@ def start():
 
 def stop():
     pid = open(PIDFILE).readline()
-    print('stoping kcptun-service | pid: {}'.format(pid))
+    print('stoping {} | pid: {}'.format(PROGRAME, pid))
     if pid:
         if subprocess.call(['kill ' + pid], shell=True) == 0:
             print(' | '.join(['stop ok', 'pid:{}'.format(pid)]))
