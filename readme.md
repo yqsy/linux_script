@@ -68,6 +68,29 @@ chkconfig kcptun-service on
 systemctl status kcptun-service.service
 ```
 
+# vps kcptun-server搭建
+```
+wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-amd64-20170525.tar.gz
+mkdir kcptun-linux-amd64-20170525
+tar -zxvf kcptun-linux-amd64-20170525.tar.gz -C kcptun-linux-amd64-20170525
+cp ./kcptun-linux-amd64-20170525/server_linux_amd64 /usr/local/bin/
+wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-server-config.json  -O /usr/local/etc/kcptun-server-config.json
+wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-server -O /etc/init.d/kcptun-server
+chmod +x /etc/init.d/kcptun-server
+
+```
+
+```
+/etc/init.d/kcptun-server start
+/etc/init.d/kcptun-server stop
+/etc/init.d/kcptun-server restart
+
+chkconfig --add kcptun-server
+chkconfig kcptun-server on
+
+systemctl status kcptun-server.service
+```
+
 # vps shadowsocks-libev搭建
 
 ```
