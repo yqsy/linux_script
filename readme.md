@@ -40,14 +40,6 @@ ip6tables-restore < /tmp/v6
 
 # 树莓派kcptun-service搭建
 
-涉及到的文件
-```
-PIDFILE = '/var/run/kcptun-service.pid'
-EXECFILE = '/usr/local/bin/client_linux_arm5'
-CONFIGFILE = '/usr/local/etc/kcptun-service-config.json'
-LOGFILE = '/var/log/kcptun-service.log'
-```
-
 ```
 cd ~
 wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-arm-20170525.tar.gz
