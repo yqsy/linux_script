@@ -18,9 +18,6 @@ import time
 import json
 from collections import OrderedDict
 
-# TODO:
-# status
-
 
 USAGE = 'Usage:sudo /etc/init.d/kcptun-service {start, stop, restart}'
 
