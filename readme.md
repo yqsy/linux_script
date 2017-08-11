@@ -56,6 +56,7 @@ tar -zxvf kcptun-linux-arm-20170525.tar.gz -C ./kcptun-linux-arm-20170525
 sudo cp ./kcptun-linux-arm-20170525/client_linux_arm5 /usr/local/bin/
 sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service-config.json -O /usr/local/etc/kcptun-service-config.json
 sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service -O /etc/init.d/kcptun-service
+chmod +x /etc/init.d/kcptun-service
 ```
 
 ```
