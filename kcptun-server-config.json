@@ -1,0 +1,14 @@
+{
+  "listen": ":35001",
+  "target": "127.0.0.1:35000",
+  "key": "key",
+  "crypt": "none",
+  "mode": "fast2",
+  "mtu": "1350",
+  "sndwnd": "1024",
+  "rcvwnd": "1024",
+  "datashard": "10",
+  "parityshard": "3",
+  "dscp": "0",
+  "nocomp": "true"
+}

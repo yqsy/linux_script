@@ -1,0 +1,113 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+### BEGIN INIT INFO
+# Provides:          kcptun-server
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start daemon at boot time
+# Description:       Enable service provided by daemon.
+### END INIT INFO
+
+import sys
+import os
+import subprocess
+import json
+from collections import OrderedDict
+
+PROGRAME = 'kcptun-server'
+USAGE = 'Usage:sudo /etc/init.d/{} {{start, stop, restart}}'.format(PROGRAME)
+
+if len(sys.argv) != 2:
+    sys.exit(USAGE)
+
+OP = sys.argv[1]
+
+
+class KcptunConfig():
+    def __init__(self):
+        self.config = []
+
+    def read_from_json(self, j):
+        self.config = json.loads(j, object_pairs_hook=OrderedDict)
+
+    def get_run_params(self):
+        params = []
+
+        for key, value in self.config.items():
+            if key == 'nocomp':
+                if value == 'true':
+                    params.append('--nocomp')
+                else:
+                    continue
+
+            params.append('--{}'.format(key))
+            params.append(value)
+
+        return params
+
+
+KCPTUN_CONFIG = KcptunConfig()
+
+PIDFILE = '/var/run/{}.pid'.format(PROGRAME)
+LOGFILE = '/var/log/{}.log'.format(PROGRAME)
+EXECFILE = '/usr/local/bin/server_linux_amd64'
+CONFIGFILE = 'usr/local/etc/kcptun-server-config.json'
+
+
+def start():
+    if not os.path.exists(EXECFILE):
+        sys.exit('{} is not exist'.format(EXECFILE))
+
+    if not os.path.exists(CONFIGFILE):
+        sys.exit('{} is not exist, please create it'.format(CONFIGFILE))
+
+    with open(CONFIGFILE) as config_file:
+        KCPTUN_CONFIG.read_from_json(config_file.read())
+
+    if os.path.exists(PIDFILE):
+        stop()
+
+    run_params = KCPTUN_CONFIG.get_run_params()
+    run_params.insert(0, EXECFILE)
+
+    print('start_params: {}'.format(run_params))
+
+    with open(LOGFILE, 'w') as log:
+        p = subprocess.Popen(run_params, stdout=log, stderr=log)
+        pid = p.pid
+        open(PIDFILE, 'w').write('{}'.format(pid))
+        print(' | '.join(['start ok', 'pid: {}'.format(pid),
+                          'logfile: {}'.format(LOGFILE)]))
+
+
+def stop():
+    pid = open(PIDFILE).readline()
+    print('stoping {} | pid: {}'.format(PROGRAME, pid))
+    if pid:
+        if subprocess.call(['kill ' + pid], shell=True) == 0:
+            print(' | '.join(['stop ok', 'pid:{}'.format(pid)]))
+            if subprocess.call(['rm ' + PIDFILE], shell=True) != 0:
+                print('delete permission denied')
+    else:
+        print('stop error')
+
+
+def restart():
+    stop()
+    start()
+
+
+OPS = {'start': start, 'stop': stop, 'restart': restart}
+
+
+def main():
+    if not OP in (OPS.keys()):
+        sys.exit(USAGE)
+    OPS[OP]()
+
+
+if __name__ == '__main__':
+    main()
