@@ -81,7 +81,6 @@ cp ./rpm/SOURCES/etc/init.d/shadowsocks-libev /etc/init.d/shadowsocks-libev
 cp ./debian/config.json /etc/shadowsocks-libev/config.json
 chmod +x /etc/init.d/shadowsocks-libev
 vim /etc/shadowsocks-libev/config.json
-
 ```
 
 ```
