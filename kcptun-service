@@ -14,10 +14,8 @@
 import sys
 import os
 import subprocess
-import time
 import json
 from collections import OrderedDict
-
 
 USAGE = 'Usage:sudo /etc/init.d/kcptun-service {start, stop, restart}'
 
