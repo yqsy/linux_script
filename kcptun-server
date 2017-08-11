@@ -54,7 +54,7 @@ KCPTUN_CONFIG = KcptunConfig()
 PIDFILE = '/var/run/{}.pid'.format(PROGRAME)
 LOGFILE = '/var/log/{}.log'.format(PROGRAME)
 EXECFILE = '/usr/local/bin/server_linux_amd64'
-CONFIGFILE = 'usr/local/etc/kcptun-server-config.json'
+CONFIGFILE = '/usr/local/etc/kcptun-server-config.json'
 
 
 def start():
