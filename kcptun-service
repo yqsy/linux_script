@@ -100,9 +100,14 @@ def restart():
     start()
 
 
-ops = {'start': start, 'stop': stop, 'restart': restart}
+OPS = {'start': start, 'stop': stop, 'restart': restart}
+
+
+def main():
+    if not OP in (OPS.keys()):
+        sys.exit(USAGE)
+    OPS[OP]()
+
 
 if __name__ == '__main__':
-    if not OP in (ops.keys()):
-        sys.exit(USAGE)
-    ops[OP]()
+    main()
