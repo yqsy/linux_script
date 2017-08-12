@@ -69,7 +69,6 @@ cp ./kcptun-linux-amd64-20170525/server_linux_amd64 /usr/local/bin/
 wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-server-config.json  -O /usr/local/etc/kcptun-server-config.json
 wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-server -O /etc/init.d/kcptun-server
 chmod +x /etc/init.d/kcptun-server
-
 ```
 
 ```
