@@ -113,5 +113,8 @@ chkconfig shadowsocks-libev on
 systemctl status shadowsocks-libev.service
 ```
 
-
+## iptables
+```
+iptables -A INPUT -p tcp --dport 35001 -m state --state NEW -j ACCEPT
+```
 
