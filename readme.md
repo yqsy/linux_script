@@ -120,6 +120,7 @@ iptables -A INPUT -p udp --dport 35000 -j ACCEPT
 
 # openwrt shadowsocks and chinadns
 ```
+opkg update
 mkdir -p /tmp/my
 wget http://openwrt-dist.sourceforge.net/archives/shadowsocks-libev/3.0.8/OpenWrt/ar71xx/libmbedtls_2.5.1-2_ar71xx.ipk  -O /tmp/my/libmbedtls_2.5.1-2_ar71xx.ipk
 wget http://openwrt-dist.sourceforge.net/archives/shadowsocks-libev/3.0.8/OpenWrt/ar71xx/libsodium_1.0.12-1_ar71xx.ipk -O /tmp/my/libsodium_1.0.12-1_ar71xx.ipk
