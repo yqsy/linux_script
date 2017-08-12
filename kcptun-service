@@ -40,8 +40,8 @@ class KcptunConfig():
             if key == 'nocomp':
                 if value == 'true':
                     params.append('--nocomp')
-                else:
-                    continue
+
+                continue
 
             params.append('--{}'.format(key))
             params.append(value)
