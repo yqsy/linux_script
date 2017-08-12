@@ -135,15 +135,22 @@ opkg install openssl-util
 wget https://github.com/shadowsocks/luci-app-shadowsocks/releases/download/v1.8.1/luci-app-shadowsocks_1.8.1-1_all.ipk -O /tmp/my/luci-app-shadowsocks_1.8.1-1_all.ipk
 opkg install /tmp/my/luci-app-shadowsocks_1.8.1-1_all.ipk
 
-wget https://sourceforge.net/projects/openwrt-dist/files/chinadns/1.3.2-761183b/ChinaDNS_1.3.2-4_ar71xx.ipk -O  /tmp/my/ChinaDNS_1.3.2-4_ar71xx.ipk
-wget https://sourceforge.net/projects/openwrt-dist/files/luci-app/chinadns/luci-app-chinadns_1.4.0-1_all.ipk -O /tmp/my/luci-app-chinadns_1.4.0-1_all.ipk
+wget https://github.com/aa65535/openwrt-chinadns/releases/download/v1.3.2-4/ChinaDNS_1.3.2-4_ar71xx.ipk -O /tmp/my/ChinaDNS_1.3.2-4_ar71xx.ipk
+wget https://github.com/aa65535/openwrt-dist-luci/releases/download/v1.6.1/luci-app-chinadns_1.6.1-1_all.ipk -O /tmp/my/luci-app-chinadns_1.6.1-1_all.ipk
 
 opkg install /tmp/my/ChinaDNS_1.3.2-4_ar71xx.ipk
-opkg install /tmp/my/luci-app-chinadns_1.4.0-1_all.ipk
+opkg install /tmp/my/luci-app-chinadns_1.6.1-1_all.ipk
 
 mkdir /etc/shadowsocks
 wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/shadowsocks/ignore.list
 wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/chinadns_chnroute.txt
+
+
+wget https://dl.bintray.com/aa65535/openwrt/dns-forwarder/1.2.1/OpenWrt/ar71xx/dns-forwarder_1.2.1-1_ar71xx.ipk -O  /tmp/my/dns-forwarder_1.2.1-1_ar71xx.ipk
+wget https://github.com/aa65535/openwrt-dist-luci/releases/download/v1.6.1/luci-app-dns-forwarder_1.6.1-1_all.ipk -O  /tmp/my/luci-app-dns-forwarder_1.6.1-1_all.ipk
+
+opkg install /tmp/my/dns-forwarder_1.2.1-1_ar71xx.ipk
+opkg install /tmp/my/luci-app-dns-forwarder_1.6.1-1_all.ipk
 
 # 在页面上配置把
 ```
