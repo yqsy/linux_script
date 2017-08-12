@@ -115,6 +115,6 @@ systemctl status shadowsocks-libev.service
 
 ## iptables
 ```
-iptables -A INPUT -p tcp --dport 35001 -m state --state NEW -j ACCEPT
+iptables -A INPUT -p tcp --dport 35000 -m state --state NEW -j ACCEPT
 ```
 
