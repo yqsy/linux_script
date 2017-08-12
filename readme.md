@@ -82,6 +82,13 @@ chkconfig kcptun-server on
 systemctl status kcptun-server.service
 ```
 
+## iptables 
+```
+iptables -A INPUT -p udp --dport 35001 -j ACCEPT
+ip6tables -A INPUT -p udp --dport 35001 -j ACCEPT
+```
+
+
 # vps shadowsocks-libev搭建
 
 ```
@@ -105,4 +112,6 @@ chkconfig shadowsocks-libev on
 
 systemctl status shadowsocks-libev.service
 ```
+
+
 
