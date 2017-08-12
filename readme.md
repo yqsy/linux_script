@@ -117,3 +117,32 @@ systemctl status shadowsocks-libev.service
 iptables -A INPUT -p tcp --dport 35000 -m state --state NEW -j ACCEPT
 ```
 
+# openwrt shadowsocks and chinadns
+```
+mkdir -p /tmp/my
+wget http://openwrt-dist.sourceforge.net/archives/shadowsocks-libev/3.0.8/OpenWrt/ar71xx/libmbedtls_2.5.1-2_ar71xx.ipk  -O /tmp/my/libmbedtls_2.5.1-2_ar71xx.ipk
+wget http://openwrt-dist.sourceforge.net/archives/shadowsocks-libev/3.0.8/OpenWrt/ar71xx/libsodium_1.0.12-1_ar71xx.ipk -O /tmp/my/libsodium_1.0.12-1_ar71xx.ipk
+wget http://openwrt-dist.sourceforge.net/archives/shadowsocks-libev/3.0.8/OpenWrt/ar71xx/libudns_0.4-1_ar71xx.ipk -O /tmp/my/libudns_0.4-1_ar71xx.ipk
+wget http://openwrt-dist.sourceforge.net/archives/shadowsocks-libev/3.0.8/OpenWrt/ar71xx/shadowsocks-libev_3.0.8-1_ar71xx.ipk -O /tmp/my/shadowsocks-libev_3.0.8-1_ar71xx.ipk
+
+opkg install /tmp/my/libmbedtls_2.5.1-2_ar71xx.ipk
+opkg install /tmp/my/libsodium_1.0.12-1_ar71xx.ipk
+opkg install /tmp/my/libudns_0.4-1_ar71xx.ipk
+opkg install /tmp/my/shadowsocks-libev_3.0.8-1_ar71xx.ipk
+
+opkg install openssl-util
+wget https://github.com/shadowsocks/luci-app-shadowsocks/releases/download/v1.8.1/luci-app-shadowsocks_1.8.1-1_all.ipk -O /tmp/my/luci-app-shadowsocks_1.8.1-1_all.ipk
+opkg install /tmp/my/luci-app-shadowsocks_1.8.1-1_all.ipk
+
+wget https://sourceforge.net/projects/openwrt-dist/files/chinadns/1.3.2-761183b/ChinaDNS_1.3.2-4_ar71xx.ipk -O  /tmp/my/ChinaDNS_1.3.2-4_ar71xx.ipk
+wget https://sourceforge.net/projects/openwrt-dist/files/luci-app/chinadns/luci-app-chinadns_1.4.0-1_all.ipk -O /tmp/my/luci-app-chinadns_1.4.0-1_all.ipk
+
+opkg install /tmp/my/ChinaDNS_1.3.2-4_ar71xx.ipk
+opkg install /tmp/my/luci-app-chinadns_1.4.0-1_all.ipk
+
+mkdir /etc/shadowsocks
+wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/shadowsocks/ignore.list
+wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/chinadns_chnroute.txt
+
+# 在页面上配置把
+```
