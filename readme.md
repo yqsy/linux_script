@@ -83,7 +83,6 @@ systemctl status kcptun-server.service
 ```
 
 ## iptables 
-(没执行,为何udp流量入口是localhost?)(是因为ipv4转ipv6吗?)
 ```
 iptables -A INPUT -p udp --dport 35001 -j ACCEPT
 ```
