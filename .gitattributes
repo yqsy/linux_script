@@ -3,3 +3,4 @@ v6 text eol=lf
 kcptun-service text eol=lf
 .vimrc text eol=lf
 *.json text eol=lf
+*.service text eol=lf
