@@ -2,7 +2,7 @@
 Description=chinaDNS service
 
 [Service]
-ExecStart=/usr/local/bin/chinadns -v -m -c /usr/local/share/chnroute.txt -l /usr/local/share/iplist.txt -p 6300 -s "114.114.114.114,127.0.0.1:5300"
+ExecStart=/usr/local/bin/chinadns -v -m -c /usr/local/share/chnroute.txt -l /usr/local/share/iplist.txt -p 6300 -s "114.114.114.114,127.0.0.1:7300"
 Restart=on-failure
 RestartSec=42s
 
