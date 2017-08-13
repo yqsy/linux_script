@@ -118,7 +118,7 @@ iptables -A INPUT -p tcp --dport 35000 -m state --state NEW -j ACCEPT
 iptables -A INPUT -p udp --dport 35000 -j ACCEPT
 ```
 
-# openwrt shadowsocks and chinadns
+# openwrt shadowsocks and chinadns and dns forwarder
 ```
 opkg update
 mkdir -p /tmp/my
