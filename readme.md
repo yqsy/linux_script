@@ -38,6 +38,11 @@ iptables-restore < /tmp/v4
 ip6tables-restore < /tmp/v6
 ```
 
+一定要注意保存
+```
+service iptables save
+```
+
 # 树莓派kcptun-service搭建
 
 ```
