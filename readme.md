@@ -1,4 +1,26 @@
+<!-- TOC -->
 
+- [.vimrc](#vimrc)
+- [iptables v4/v6](#iptables-v4v6)
+- [vps kcptun-server](#vps-kcptun-server)
+    - [iptables](#iptables)
+- [vps shadowsocks-libev](#vps-shadowsocks-libev)
+    - [iptables](#iptables-1)
+- [openwrt shadowsocks and chinadns and dns forwarder](#openwrt-shadowsocks-and-chinadns-and-dns-forwarder)
+- [树莓派kcptun-service](#树莓派kcptun-service)
+- [树莓派shadowsocks-libev-redir](#树莓派shadowsocks-libev-redir)
+    - [增加NAT Chain](#增加nat-chain)
+    - [过滤目的ss服务器地址](#过滤目的ss服务器地址)
+    - [过滤保留,私有,回环地址](#过滤保留私有回环地址)
+    - [过滤大陆地址](#过滤大陆地址)
+        - [查看ipset](#查看ipset)
+    - [重定向至ss-redir](#重定向至ss-redir)
+    - [保存iptables](#保存iptables)
+- [树莓派shadowsocks-libev-tunnel](#树莓派shadowsocks-libev-tunnel)
+- [树莓派chinadns](#树莓派chinadns)
+- [树莓派开启ip包转发](#树莓派开启ip包转发)
+
+<!-- /TOC -->
 # .vimrc
 ```
 curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.vimrc
@@ -217,13 +239,56 @@ sudo systemctl status shadowsocks-libev-redir -l
 sudo iptables -t nat -N SHADOWSOCKS
 ```
 
-## 过滤目的ss服务器
+## 过滤目的ss服务器地址
 ```
 sudo iptables -t nat -A SHADOWSOCKS -d 45.32.17.217 -j RETURN
 ```
 
-## 
+## 过滤保留,私有,回环地址
+```
+sudo iptables -t nat -A SHADOWSOCKS -d 0.0.0.0/8 -j RETURN
+sudo iptables -t nat -A SHADOWSOCKS -d 10.0.0.0/8 -j RETURN
+sudo iptables -t nat -A SHADOWSOCKS -d 127.0.0.0/8 -j RETURN
+sudo iptables -t nat -A SHADOWSOCKS -d 169.254.0.0/16 -j RETURN
+sudo iptables -t nat -A SHADOWSOCKS -d 172.16.0.0/12 -j RETURN
+sudo iptables -t nat -A SHADOWSOCKS -d 192.168.0.0/16 -j RETURN
+sudo iptables -t nat -A SHADOWSOCKS -d 224.0.0.0/4 -j RETURN
+sudo iptables -t nat -A SHADOWSOCKS -d 240.0.0.0/4 -j RETURN
+```
 
+## 过滤大陆地址
+```
+sudo apt-get install ipset -y
+curl -sL http://f.ip.cn/rt/chnroutes.txt | egrep -v '^$|^#' > cidr_cn
+sudo ipset -N cidr_cn hash:net
+for i in `cat cidr_cn`; do echo ipset -A cidr_cn $i >> ipset.sh; done
+chmod +x ipset.sh && sudo ./ipset.sh
+sudo mkdir -p /etc/sysconfig
+sudo ipset -S  | sudo tee /etc/sysconfig/ipset.cidr_cn
+sudo vim /etc/rc.local
+add
+ipset restore < /etc/sysconfig/ipset.cidr_cn
+sudo iptables -t nat -A SHADOWSOCKS -m set --match-set cidr_cn dst -j RETURN
+```
+
+### 查看ipset
+```
+sudo ipset list 
+```
+
+## 重定向至ss-redir
+```
+sudo iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports 1080
+sudo iptables -t nat -A OUTPUT -p tcp -j SHADOWSOCKS
+```
+
+## 保存iptables
+```
+sudo service netfilter-persistent save
+sudo vim /etc/rc.local
+add
+iptables-restore < /etc/iptables/rules.v4  
+```
 
 # 树莓派shadowsocks-libev-tunnel
 ```
