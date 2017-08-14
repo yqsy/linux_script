@@ -19,6 +19,8 @@
 - [树莓派shadowsocks-libev-tunnel](#树莓派shadowsocks-libev-tunnel)
 - [树莓派chinadns](#树莓派chinadns)
 - [树莓派开启ip包转发](#树莓派开启ip包转发)
+- [树莓派dnsmasq,dns转发](#树莓派dnsmasqdns转发)
+    - [查看使用的dns服务器](#查看使用的dns服务器)
 
 <!-- /TOC -->
 # .vimrc
@@ -335,3 +337,18 @@ net.ipv4.ip_forward=1
 sudo sysctl -p
 ```
 
+# 树莓派dnsmasq,dns转发
+```
+sudo apt-get install dnsmasq -y
+sudo vim /etc/dnsmasq.conf
+no-resolv 
+server=202.38.93.153 
+server=202.141.162.123
+
+sudo systemctl restart  dnsmasq.service
+```
+
+## 查看使用的dns服务器
+```
+sudo vim /etc/resolv.conf
+```
