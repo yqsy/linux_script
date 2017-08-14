@@ -1,4 +1,5 @@
-# vimrc
+
+# .vimrc
 ```
 curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.vimrc
 ```
@@ -43,29 +44,7 @@ ip6tables-restore < /tmp/v6
 service iptables save
 ```
 
-# 树莓派kcptun-service搭建
-
-```
-cd ~
-wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-arm-20170525.tar.gz
-mkdir kcptun-linux-arm-20170525
-tar -zxvf kcptun-linux-arm-20170525.tar.gz -C ./kcptun-linux-arm-20170525
-sudo cp ./kcptun-linux-arm-20170525/client_linux_arm5 /usr/local/bin/
-sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service-config.json -O /usr/local/etc/kcptun-service-config.json
-sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service -O /etc/init.d/kcptun-service
-chmod +x /etc/init.d/kcptun-service
-```
-
-```
-sudo /etc/init.d/kcptun-service start
-sudo /etc/init.d/kcptun-service stop
-sudo /etc/init.d/kcptun-service restart
-chkconfig kcptun-service on
-
-systemctl status kcptun-service.service
-```
-
-# vps kcptun-server搭建
+# vps kcptun-server
 ```
 wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-amd64-20170525.tar.gz
 mkdir kcptun-linux-amd64-20170525
@@ -93,7 +72,7 @@ iptables -A INPUT -p udp --dport 35001 -j ACCEPT
 ```
 
 
-# vps shadowsocks-libev搭建
+# vps shadowsocks-libev
 
 ```
 yum install gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel libsodium-devel mbedtls-devel -y
@@ -160,3 +139,134 @@ opkg install /tmp/my/luci-app-dns-forwarder_1.6.1-1_all.ipk
 
 # 在页面上配置把
 ```
+
+# 树莓派kcptun-service
+
+```
+cd ~
+wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-arm-20170525.tar.gz
+mkdir kcptun-linux-arm-20170525
+tar -zxvf kcptun-linux-arm-20170525.tar.gz -C ./kcptun-linux-arm-20170525
+sudo cp ./kcptun-linux-arm-20170525/client_linux_arm5 /usr/local/bin/
+sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service-config.json -O /usr/local/etc/kcptun-service-config.json
+sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service -O /etc/init.d/kcptun-service
+chmod +x /etc/init.d/kcptun-service
+```
+
+```
+sudo /etc/init.d/kcptun-service start
+sudo /etc/init.d/kcptun-service stop
+sudo /etc/init.d/kcptun-service restart
+chkconfig kcptun-service on
+
+systemctl status kcptun-service.service
+```
+
+# 树莓派shadowsocks-libev-redir
+```
+sudo apt-get update
+sudo apt-get install libpcre3-dev -y
+sudo apt-get install libudns-dev -y
+sudo apt-get install libev-dev -y
+sudo apt-get install iptables-persistent -y
+
+
+export LIBSODIUM_VER=1.0.13
+wget https://download.libsodium.org/libsodium/releases/libsodium-$LIBSODIUM_VER.tar.gz
+tar xvf libsodium-$LIBSODIUM_VER.tar.gz
+pushd libsodium-$LIBSODIUM_VER
+./configure --prefix=/usr && make
+sudo make install
+popd
+sudo ldconfig
+
+
+export MBEDTLS_VER=2.5.1
+wget https://tls.mbed.org/download/mbedtls-$MBEDTLS_VER-gpl.tgz
+tar xvf mbedtls-$MBEDTLS_VER-gpl.tgz
+pushd mbedtls-$MBEDTLS_VER
+make SHARED=1 CFLAGS=-fPIC
+sudo make DESTDIR=/usr install
+popd
+sudo ldconfig
+
+
+wget https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.0.8/shadowsocks-libev-3.0.8.tar.gz
+tar -zxvf shadowsocks-libev-3.0.8.tar.gz
+cd shadowsocks-libev-3.0.8
+./configure --prefix=/usr --disable-documentation
+sudo make install
+
+sudo cp ./debian/shadowsocks-libev-redir@.service /lib/systemd/system/shadowsocks-libev-redir.service
+sudo vim /lib/systemd/system/shadowsocks-libev-redir.service
+sudo mkdir -p  /etc/shadowsocks-libev
+sudo cp ./debian/config.json /etc/shadowsocks-libev/redir.json
+sudo vim /etc/shadowsocks-libev/redir.json
+add "local_address":"0.0.0.0",
+```
+
+```
+sudo systemctl daemon-reload
+sudo systemctl enable shadowsocks-libev-redir
+sudo systemctl start shadowsocks-libev-redir
+sudo systemctl status shadowsocks-libev-redir -l
+```
+
+## 增加NAT Chain
+```
+sudo iptables -t nat -N SHADOWSOCKS
+```
+
+## 过滤目的ss服务器
+```
+sudo iptables -t nat -A SHADOWSOCKS -d 45.32.17.217 -j RETURN
+```
+
+## 
+
+
+# 树莓派shadowsocks-libev-tunnel
+```
+sudo cp ./debian/shadowsocks-libev-tunnel@.service /lib/systemd/system/shadowsocks-libev-tunnel.service
+sudo vim /lib/systemd/system/shadowsocks-libev-tunnel.service
+add -L 8.8.4.4:53 -U
+sudo mkdir -p /etc/shadowsocks-libev
+sudo cp ./debian/config.json /etc/shadowsocks-libev/tunnel.json
+sudo vim /etc/shadowsocks-libev/tunnel.json
+add "local_address":"0.0.0.0",
+```
+
+```
+sudo systemctl daemon-reload
+sudo systemctl enable shadowsocks-libev-tunnel
+sudo systemctl start shadowsocks-libev-tunnel
+sudo systemctl status shadowsocks-libev-tunnel -l
+```
+
+# 树莓派chinadns
+```
+cd ..
+wget https://github.com/shadowsocks/ChinaDNS/releases/download/1.3.2/chinadns-1.3.2.tar.gz
+tar -zxvf chinadns-1.3.2.tar.gz
+cd chinadns-1.3.2
+./configure
+make
+sudo make install
+
+sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/chinadns.service -O /lib/systemd/system/chinadns.service
+```
+
+```
+sudo systemctl daemon-reload
+sudo systemctl enable chinadns
+sudo systemctl start chinadns
+sudo systemctl status chinadns -l
+```
+
+# 树莓派开启ip包转发
+```
+sudo vim /etc/sysctl.conf
+net.ipv4.ip_forward=1
+sudo sysctl -p
+```
+
