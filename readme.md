@@ -295,7 +295,8 @@ sudo iptables -t nat -A OUTPUT -p tcp -j SHADOWSOCKS
 sudo service netfilter-persistent save
 sudo vim /etc/rc.local
 add
-iptables-restore < /etc/iptables/rules.v4  
+iptables-restore < /etc/iptables/rules.v4
+iptables-restore < /etc/iptables/rules.v6 
 ```
 
 # 树莓派shadowsocks-libev-tunnel
