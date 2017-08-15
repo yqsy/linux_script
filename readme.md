@@ -66,6 +66,8 @@ ip6tables-restore < /tmp/v6
 一定要注意保存
 ```
 service iptables save
+写入的是
+/etc/sysconfig/iptables
 ```
 
 # vps kcptun-server
