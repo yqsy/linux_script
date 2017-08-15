@@ -61,11 +61,14 @@ wget https://raw.githubusercontent.com/yqsy/linux_script/master/v4 -O /tmp/v4
 wget https://raw.githubusercontent.com/yqsy/linux_script/master/v6 -O /tmp/v6
 iptables-restore < /tmp/v4
 ip6tables-restore < /tmp/v6
+```
+
+一定要注意保存
+```
 service iptables save
 service ip6tables save
 ```
 
-一定要注意保存
 ```
 /etc/sysconfig/iptables
 /etc/sysconfig/ip6tables
