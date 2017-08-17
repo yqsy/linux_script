@@ -93,7 +93,7 @@ chmod +x /etc/init.d/kcptun-server
 chkconfig --add kcptun-server
 chkconfig kcptun-server on
 
-systemctl status kcptun-server.service
+systemctl status kcptun-server.service -l
 ```
 
 ## iptables 
@@ -123,7 +123,7 @@ chkconfig --add shadowsocks-libev
 chkconfig shadowsocks-libev on
 /etc/init.d/shadowsocks-libev start
 
-systemctl status shadowsocks-libev.service
+systemctl status shadowsocks-libev.service -l
 ```
 
 ## iptables
@@ -189,7 +189,7 @@ sudo /etc/init.d/kcptun-service stop
 sudo /etc/init.d/kcptun-service restart
 chkconfig kcptun-service on
 
-systemctl status kcptun-service.service
+systemctl status kcptun-service.service -l
 ```
 
 # 树莓派shadowsocks-libev-redir
