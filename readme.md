@@ -72,6 +72,8 @@ service ip6tables save
 ```
 /etc/sysconfig/iptables
 /etc/sysconfig/ip6tables
+systemctl restart iptables
+systemctl restart ip6tables
 ```
 
 # vps kcptun-server
@@ -86,12 +88,9 @@ chmod +x /etc/init.d/kcptun-server
 ```
 
 ```
-/etc/init.d/kcptun-server start
-/etc/init.d/kcptun-server stop
-/etc/init.d/kcptun-server restart
-
 chkconfig --add kcptun-server
 chkconfig kcptun-server on
+/etc/init.d/kcptun-server start
 
 systemctl status kcptun-server.service -l
 ```
@@ -184,10 +183,9 @@ chmod +x /etc/init.d/kcptun-service
 ```
 
 ```
+sudo chkconfig --add kcptun-service
+sudo chkconfig kcptun-service on
 sudo /etc/init.d/kcptun-service start
-sudo /etc/init.d/kcptun-service stop
-sudo /etc/init.d/kcptun-service restart
-chkconfig kcptun-service on
 
 systemctl status kcptun-service.service -l
 ```
@@ -239,6 +237,7 @@ add "local_address":"0.0.0.0",
 sudo systemctl daemon-reload
 sudo systemctl enable shadowsocks-libev-redir
 sudo systemctl start shadowsocks-libev-redir
+
 sudo systemctl status shadowsocks-libev-redir -l
 ```
 
@@ -314,6 +313,7 @@ add "local_address":"0.0.0.0",
 sudo systemctl daemon-reload
 sudo systemctl enable shadowsocks-libev-tunnel
 sudo systemctl start shadowsocks-libev-tunnel
+
 sudo systemctl status shadowsocks-libev-tunnel -l
 ```
 
@@ -334,6 +334,7 @@ sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/chinadns.se
 sudo systemctl daemon-reload
 sudo systemctl enable chinadns
 sudo systemctl start chinadns
+
 sudo systemctl status chinadns -l
 ```
 
