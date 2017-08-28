@@ -80,7 +80,7 @@ systemctl restart ip6tables
 ```
 wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-amd64-20170525.tar.gz
 mkdir kcptun-linux-amd64-20170525
-tar -zxvf kcptun-linux-amd64-20170525.tar.gz -C kcptun-linux-amd64-20170525
+tar -xvzf kcptun-linux-amd64-20170525.tar.gz -C kcptun-linux-amd64-20170525
 cp ./kcptun-linux-amd64-20170525/server_linux_amd64 /usr/local/bin/
 wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-server-config.json  -O /usr/local/etc/kcptun-server-config.json
 wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-server -O /etc/init.d/kcptun-server
@@ -106,7 +106,7 @@ iptables -A INPUT -p udp --dport 35001 -j ACCEPT
 ```
 yum install gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel libsodium-devel mbedtls-devel -y
 wget https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.0.8/shadowsocks-libev-3.0.8.tar.gz
-tar -zxvf shadowsocks-libev-3.0.8.tar.gz
+tar -xvzf shadowsocks-libev-3.0.8.tar.gz
 cd shadowsocks-libev-3.0.8
 ./configure --prefix=/usr && make
 make install
@@ -175,7 +175,7 @@ opkg install /tmp/my/luci-app-dns-forwarder_1.6.1-1_all.ipk
 cd ~
 wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-arm-20170525.tar.gz
 mkdir kcptun-linux-arm-20170525
-tar -zxvf kcptun-linux-arm-20170525.tar.gz -C ./kcptun-linux-arm-20170525
+tar -xvzf kcptun-linux-arm-20170525.tar.gz -C ./kcptun-linux-arm-20170525
 sudo cp ./kcptun-linux-arm-20170525/client_linux_arm5 /usr/local/bin/
 sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service-config.json -O /usr/local/etc/kcptun-service-config.json
 sudo wget https://raw.githubusercontent.com/yqsy/linux_script/master/kcptun-service -O /etc/init.d/kcptun-service
@@ -201,7 +201,7 @@ sudo apt-get install iptables-persistent -y
 
 export LIBSODIUM_VER=1.0.13
 wget https://download.libsodium.org/libsodium/releases/libsodium-$LIBSODIUM_VER.tar.gz
-tar xvf libsodium-$LIBSODIUM_VER.tar.gz
+tar -xvzf libsodium-$LIBSODIUM_VER.tar.gz
 pushd libsodium-$LIBSODIUM_VER
 ./configure --prefix=/usr && make
 sudo make install
@@ -211,7 +211,7 @@ sudo ldconfig
 
 export MBEDTLS_VER=2.5.1
 wget https://tls.mbed.org/download/mbedtls-$MBEDTLS_VER-gpl.tgz
-tar xvf mbedtls-$MBEDTLS_VER-gpl.tgz
+tar -xvzf mbedtls-$MBEDTLS_VER-gpl.tgz
 pushd mbedtls-$MBEDTLS_VER
 make SHARED=1 CFLAGS=-fPIC
 sudo make DESTDIR=/usr install
@@ -220,7 +220,7 @@ sudo ldconfig
 
 
 wget https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.0.8/shadowsocks-libev-3.0.8.tar.gz
-tar -zxvf shadowsocks-libev-3.0.8.tar.gz
+tar -xvzf shadowsocks-libev-3.0.8.tar.gz
 cd shadowsocks-libev-3.0.8
 ./configure --prefix=/usr --disable-documentation
 sudo make install
@@ -321,7 +321,7 @@ sudo systemctl status shadowsocks-libev-tunnel -l
 ```
 cd ..
 wget https://github.com/shadowsocks/ChinaDNS/releases/download/1.3.2/chinadns-1.3.2.tar.gz
-tar -zxvf chinadns-1.3.2.tar.gz
+tar -xvzf chinadns-1.3.2.tar.gz
 cd chinadns-1.3.2
 ./configure
 make
