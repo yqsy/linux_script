@@ -6,6 +6,7 @@
 -A INPUT -p tcp --dport 443 -m state --state NEW -j ACCEPT
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 -P INPUT DROP
+-P OUTPUT ACCEP
 -P FORWARD DROP
 
 COMMIT
