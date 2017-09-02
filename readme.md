@@ -288,6 +288,7 @@ sudo ipset list
 ```
 sudo iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports 1080
 sudo iptables -t nat -A OUTPUT -p tcp -j SHADOWSOCKS
+sudo iptables -t nat -A PREROUTING -p tcp -j SHADOWSOCKS
 ```
 
 ## 保存iptables
