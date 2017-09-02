@@ -355,6 +355,9 @@ no-resolv
 server=202.38.93.153 
 server=202.141.162.123
 
+# 这行千万别忘了,不然默认只能loopback
+interface=eth0
+
 sudo systemctl restart  dnsmasq.service
 ```
 
