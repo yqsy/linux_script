@@ -24,7 +24,8 @@
 - [树莓派静态ip](#树莓派静态ip)
     - [在openwrt上修改dhcp 静态IP(绑定mac)](#在openwrt上修改dhcp-静态ip绑定mac)
     - [重新获得ip地址](#重新获得ip地址)
-- [目前的问题](#目前的问题)
+- [透明代理的缺点](#透明代理的缺点)
+    - [暂时的作用](#暂时的作用)
 
 <!-- /TOC -->
 # .vimrc
@@ -425,9 +426,13 @@ ipconfig /renew
 sudo /etc/init.d/networking restart
 ```
 
-# 目前的问题
+# 透明代理的缺点
 ```
 sudo tcpdump -i eth0 -n udp port 53
 ```
 
-youtube 会主动向8.8.8.8:53发送dns请求?
+* dns问题.youtube貌似会发8.8.8.8:53?还需要将所有53的流量重定位到dnsmasq?(现象是看youtube初始视频非常不稳)
+* 国内ip列表可能太多?把国外的ip也涵盖进去了?导致有许多ip没走代理直接访问?
+
+## 暂时的作用
+还是搭配 ss客户端 + kcptun客户端一起使用吧,透明代理暂时只解决比如手机google商店下载,pip源,choco下载这些
