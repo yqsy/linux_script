@@ -21,6 +21,7 @@
 - [树莓派开启ip包转发](#树莓派开启ip包转发)
 - [树莓派dnsmasq,dns转发](#树莓派dnsmasqdns转发)
     - [查看使用的dns服务器](#查看使用的dns服务器)
+- [树莓派静态ip](#树莓派静态ip)
 
 <!-- /TOC -->
 # .vimrc
@@ -359,4 +360,16 @@ sudo systemctl restart  dnsmasq.service
 ## 查看使用的dns服务器
 ```
 sudo vim /etc/resolv.conf
+```
+
+# 树莓派静态ip
+```
+sudo vim /etc/network/interfaces
+
+iface eth0 inet static
+    address 192.168.2.127
+    network 192.168.2.0
+    netmask 255.255.255.0
+    broadcast 192.168.2.255
+    gateway 192.168.2.1
 ```
