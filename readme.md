@@ -24,6 +24,7 @@
 - [树莓派静态ip](#树莓派静态ip)
     - [在openwrt上修改dhcp 静态IP(绑定mac)](#在openwrt上修改dhcp-静态ip绑定mac)
     - [重新获得ip地址](#重新获得ip地址)
+- [目前的问题](#目前的问题)
 
 <!-- /TOC -->
 # .vimrc
@@ -423,3 +424,10 @@ ipconfig /renew
 # linux
 sudo /etc/init.d/networking restart
 ```
+
+# 目前的问题
+```
+sudo tcpdump -i eth0 -n udp port 53
+```
+
+youtube 会主动向8.8.8.8:53发送dns请求?
