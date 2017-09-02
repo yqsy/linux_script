@@ -435,4 +435,5 @@ sudo tcpdump -i eth0 -n udp port 53
 * 国内ip列表可能太多?把国外的ip也涵盖进去了?导致有许多ip没走代理直接访问?
 
 ## 暂时的作用
-还是搭配 ss客户端 + kcptun客户端一起使用吧,透明代理暂时只解决比如手机google商店下载,pip源,choco下载这些
+还是搭配 ss客户端 + kcptun客户端一起使用吧,透明代理暂时只解决比如手机google商店下载,pip源,choco下载这些  
+等仔细研究了一波Linux再来想法解决这些问题把
