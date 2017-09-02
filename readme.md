@@ -394,7 +394,6 @@ vim /etc/config/dhcp
 config host
         option mac 'b8:27:eb:20:d3:1d'
         option ip '192.168.2.127'
-        option tag 'mytag'
 
 config host
         option mac '30:5a:3a:59:d6:aa'
