@@ -363,6 +363,8 @@ sudo vim /etc/resolv.conf
 ```
 
 # 树莓派静态ip
+
+这样没有哈,因为Raspbian改由dhcpcd管理,不过据说这样直接修改静态IP会造成混乱,直接在路由器上改把
 ```
 sudo vim /etc/network/interfaces
 
