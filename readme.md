@@ -22,6 +22,8 @@
 - [树莓派dnsmasq,dns转发](#树莓派dnsmasqdns转发)
     - [查看使用的dns服务器](#查看使用的dns服务器)
 - [树莓派静态ip](#树莓派静态ip)
+    - [在openwrt上修改dhcp 静态IP(绑定mac)](#在openwrt上修改dhcp-静态ip绑定mac)
+    - [重新获得ip地址](#重新获得ip地址)
 
 <!-- /TOC -->
 # .vimrc
@@ -378,4 +380,46 @@ iface eth0 inet static
     netmask 255.255.255.0
     broadcast 192.168.2.255
     gateway 192.168.2.1
+```
+
+## 在openwrt上修改dhcp 静态IP(绑定mac)
+
+```
+vim /etc/config/dhcp
+```
+
+```
+config host
+        option mac 'b8:27:eb:20:d3:1d'
+        option ip '192.168.2.127'
+        option tag 'mytag'
+
+config host
+        option mac '30:5a:3a:59:d6:aa'
+        option ip '192.168.2.106'
+        option tag 'mytag'
+
+config host
+        option mac '00:0c:29:be:98:9d'
+        option ip '192.168.2.200'
+        option tag 'mytag'
+
+config tag 'mytag'
+        list 'dhcp_option' '3,192.168.2.127'
+        list 'dhcp_option' '6,192.168.2.127'
+
+```
+
+```
+/etc/init.d/dnsmasq restart
+```
+
+## 重新获得ip地址
+```
+# windows
+ipconfig /release
+ipconfig /renew
+
+# linux
+sudo /etc/init.d/networking restart
 ```
