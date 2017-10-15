@@ -1,39 +1,39 @@
 <!-- TOC -->
 
-- [.vimrc](#vimrc)
-- [iptables v4/v6](#iptables-v4v6)
-- [vps kcptun-server](#vps-kcptun-server)
-    - [iptables](#iptables)
-- [vps shadowsocks-libev](#vps-shadowsocks-libev)
-    - [iptables](#iptables-1)
-- [openwrt shadowsocks and chinadns and dns forwarder](#openwrt-shadowsocks-and-chinadns-and-dns-forwarder)
-- [树莓派kcptun-service](#树莓派kcptun-service)
-- [树莓派shadowsocks-libev-redir](#树莓派shadowsocks-libev-redir)
-    - [增加NAT Chain](#增加nat-chain)
-    - [过滤目的ss服务器地址](#过滤目的ss服务器地址)
-    - [过滤保留,私有,回环地址](#过滤保留私有回环地址)
-    - [过滤大陆地址](#过滤大陆地址)
-        - [查看ipset](#查看ipset)
-    - [重定向至ss-redir](#重定向至ss-redir)
-    - [保存iptables](#保存iptables)
-- [树莓派shadowsocks-libev-tunnel](#树莓派shadowsocks-libev-tunnel)
-- [树莓派chinadns](#树莓派chinadns)
-- [树莓派开启ip包转发](#树莓派开启ip包转发)
-- [树莓派dnsmasq,dns转发](#树莓派dnsmasqdns转发)
-    - [查看使用的dns服务器](#查看使用的dns服务器)
-- [树莓派静态ip](#树莓派静态ip)
-    - [在openwrt上修改dhcp 静态IP(绑定mac)](#在openwrt上修改dhcp-静态ip绑定mac)
-    - [重新获得ip地址](#重新获得ip地址)
-- [透明代理的缺点](#透明代理的缺点)
-    - [暂时的作用](#暂时的作用)
+- [1. vimrc](#1-vimrc)
+- [2. iptables v4/v6](#2-iptables-v4v6)
+- [3. vps kcptun-server](#3-vps-kcptun-server)
+    - [3.1. iptables](#31-iptables)
+- [4. vps shadowsocks-libev](#4-vps-shadowsocks-libev)
+    - [4.1. iptables](#41-iptables)
+- [5. openwrt shadowsocks and chinadns and dns forwarder](#5-openwrt-shadowsocks-and-chinadns-and-dns-forwarder)
+- [6. 树莓派kcptun-service](#6-树莓派kcptun-service)
+- [7. 树莓派shadowsocks-libev-redir](#7-树莓派shadowsocks-libev-redir)
+    - [7.1. 增加NAT Chain](#71-增加nat-chain)
+    - [7.2. 过滤目的ss服务器地址](#72-过滤目的ss服务器地址)
+    - [7.3. 过滤保留,私有,回环地址](#73-过滤保留私有回环地址)
+    - [7.4. 过滤大陆地址](#74-过滤大陆地址)
+        - [7.4.1. 查看ipset](#741-查看ipset)
+    - [7.5. 重定向至ss-redir](#75-重定向至ss-redir)
+    - [7.6. 保存iptables](#76-保存iptables)
+- [8. 树莓派shadowsocks-libev-tunnel](#8-树莓派shadowsocks-libev-tunnel)
+- [9. 树莓派chinadns](#9-树莓派chinadns)
+- [10. 树莓派开启ip包转发](#10-树莓派开启ip包转发)
+- [11. 树莓派dnsmasq,dns转发](#11-树莓派dnsmasqdns转发)
+    - [11.1. 查看使用的dns服务器](#111-查看使用的dns服务器)
+- [12. 树莓派静态ip](#12-树莓派静态ip)
+    - [12.1. 在openwrt上修改dhcp 静态IP(绑定mac)](#121-在openwrt上修改dhcp-静态ip绑定mac)
+    - [12.2. 重新获得ip地址](#122-重新获得ip地址)
+- [13. 透明代理的缺点](#13-透明代理的缺点)
+    - [13.1. 暂时的作用](#131-暂时的作用)
 
 <!-- /TOC -->
-# .vimrc
+# 1. vimrc
 ```
 curl https://raw.githubusercontent.com/yqsy/linux_script/master/.vimrc | tee ~/.vimrc
 ```
 
-# iptables v4/v6 
+# 2. iptables v4/v6 
 
 在centos7上,需要firewalld与开启iptables
 ```
@@ -81,7 +81,7 @@ systemctl restart iptables
 systemctl restart ip6tables
 ```
 
-# vps kcptun-server
+# 3. vps kcptun-server
 ```
 wget https://github.com/xtaci/kcptun/releases/download/v20170525/kcptun-linux-amd64-20170525.tar.gz
 mkdir kcptun-linux-amd64-20170525
@@ -100,13 +100,13 @@ chkconfig kcptun-server on
 systemctl status kcptun-server.service -l
 ```
 
-## iptables 
+## 3.1. iptables 
 ```
 iptables -A INPUT -p udp --dport 35001 -j ACCEPT
 ```
 
 
-# vps shadowsocks-libev
+# 4. vps shadowsocks-libev
 
 ```
 yum install gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel libsodium-devel mbedtls-devel -y
@@ -130,13 +130,13 @@ chkconfig shadowsocks-libev on
 systemctl status shadowsocks-libev.service -l
 ```
 
-## iptables
+## 4.1. iptables
 ```
 iptables -A INPUT -p tcp --dport 35000 -m state --state NEW -j ACCEPT
 iptables -A INPUT -p udp --dport 35000 -j ACCEPT
 ```
 
-# openwrt shadowsocks and chinadns and dns forwarder
+# 5. openwrt shadowsocks and chinadns and dns forwarder
 ```
 opkg update
 mkdir -p /tmp/my
@@ -174,7 +174,7 @@ opkg install /tmp/my/luci-app-dns-forwarder_1.6.1-1_all.ipk
 # 在页面上配置把
 ```
 
-# 树莓派kcptun-service
+# 6. 树莓派kcptun-service
 
 ```
 cd ~
@@ -195,7 +195,7 @@ sudo /etc/init.d/kcptun-service start
 systemctl status kcptun-service.service -l
 ```
 
-# 树莓派shadowsocks-libev-redir
+# 7. 树莓派shadowsocks-libev-redir
 ```
 sudo apt-get update
 sudo apt-get install libpcre3-dev -y
@@ -246,17 +246,17 @@ sudo systemctl start shadowsocks-libev-redir
 sudo systemctl status shadowsocks-libev-redir -l
 ```
 
-## 增加NAT Chain
+## 7.1. 增加NAT Chain
 ```
 sudo iptables -t nat -N SHADOWSOCKS
 ```
 
-## 过滤目的ss服务器地址
+## 7.2. 过滤目的ss服务器地址
 ```
 sudo iptables -t nat -A SHADOWSOCKS -d 45.32.17.217 -j RETURN
 ```
 
-## 过滤保留,私有,回环地址
+## 7.3. 过滤保留,私有,回环地址
 ```
 sudo iptables -t nat -A SHADOWSOCKS -d 0.0.0.0/8 -j RETURN
 sudo iptables -t nat -A SHADOWSOCKS -d 10.0.0.0/8 -j RETURN
@@ -268,7 +268,7 @@ sudo iptables -t nat -A SHADOWSOCKS -d 224.0.0.0/4 -j RETURN
 sudo iptables -t nat -A SHADOWSOCKS -d 240.0.0.0/4 -j RETURN
 ```
 
-## 过滤大陆地址
+## 7.4. 过滤大陆地址
 ```
 sudo apt-get install ipset -y
 curl -sL http://f.ip.cn/rt/chnroutes.txt | egrep -v '^$|^#' > cidr_cn
@@ -283,19 +283,19 @@ ipset restore < /etc/sysconfig/ipset.cidr_cn
 sudo iptables -t nat -A SHADOWSOCKS -m set --match-set cidr_cn dst -j RETURN
 ```
 
-### 查看ipset
+### 7.4.1. 查看ipset
 ```
 sudo ipset list 
 ```
 
-## 重定向至ss-redir
+## 7.5. 重定向至ss-redir
 ```
 sudo iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports 1080
 sudo iptables -t nat -A OUTPUT -p tcp -j SHADOWSOCKS
 sudo iptables -t nat -A PREROUTING -p tcp -j SHADOWSOCKS
 ```
 
-## 保存iptables
+## 7.6. 保存iptables
 ```
 sudo service netfilter-persistent save
 sudo vim /etc/rc.local
@@ -304,7 +304,7 @@ iptables-restore < /etc/iptables/rules.v4
 iptables-restore < /etc/iptables/rules.v6 
 ```
 
-# 树莓派shadowsocks-libev-tunnel
+# 8. 树莓派shadowsocks-libev-tunnel
 ```
 sudo cp ./debian/shadowsocks-libev-tunnel@.service /lib/systemd/system/shadowsocks-libev-tunnel.service
 sudo vim /lib/systemd/system/shadowsocks-libev-tunnel.service
@@ -323,7 +323,7 @@ sudo systemctl start shadowsocks-libev-tunnel
 sudo systemctl status shadowsocks-libev-tunnel -l
 ```
 
-# 树莓派chinadns
+# 9. 树莓派chinadns
 ```
 cd ..
 wget https://github.com/shadowsocks/ChinaDNS/releases/download/1.3.2/chinadns-1.3.2.tar.gz
@@ -344,14 +344,14 @@ sudo systemctl start chinadns
 sudo systemctl status chinadns -l
 ```
 
-# 树莓派开启ip包转发
+# 10. 树莓派开启ip包转发
 ```
 sudo vim /etc/sysctl.conf
 net.ipv4.ip_forward=1
 sudo sysctl -p
 ```
 
-# 树莓派dnsmasq,dns转发
+# 11. 树莓派dnsmasq,dns转发
 ```
 sudo apt-get install dnsmasq -y
 sudo vim /etc/dnsmasq.conf
@@ -365,12 +365,12 @@ interface=eth0
 sudo systemctl restart  dnsmasq.service
 ```
 
-## 查看使用的dns服务器
+## 11.1. 查看使用的dns服务器
 ```
 sudo vim /etc/resolv.conf
 ```
 
-# 树莓派静态ip
+# 12. 树莓派静态ip
 
 这样没有哈,因为Raspbian改由dhcpcd管理,不过据说这样直接修改静态IP会造成混乱,直接在路由器上改把
 ```
@@ -384,7 +384,7 @@ iface eth0 inet static
     gateway 192.168.2.1
 ```
 
-## 在openwrt上修改dhcp 静态IP(绑定mac)
+## 12.1. 在openwrt上修改dhcp 静态IP(绑定mac)
 
 ```
 vim /etc/config/dhcp
@@ -415,7 +415,7 @@ config tag 'mytag'
 /etc/init.d/dnsmasq restart
 ```
 
-## 重新获得ip地址
+## 12.2. 重新获得ip地址
 ```
 # windows
 ipconfig /release
@@ -425,7 +425,7 @@ ipconfig /renew
 sudo /etc/init.d/networking restart
 ```
 
-# 透明代理的缺点
+# 13. 透明代理的缺点
 ```
 sudo tcpdump -i eth0 -n udp port 53
 ```
@@ -433,6 +433,6 @@ sudo tcpdump -i eth0 -n udp port 53
 * dns问题.youtube貌似会发8.8.8.8:53?还需要将所有53的流量重定位到dnsmasq?(现象是看youtube初始视频非常不稳)
 * 国内ip列表可能太多?把国外的ip也涵盖进去了?导致有许多ip没走代理直接访问?
 
-## 暂时的作用
+## 13.1. 暂时的作用
 暂时不把树莓派设置成默认网关了,因为效果不是很理想  
 等仔细研究了一波Linux再来想法解决这些问题把  
