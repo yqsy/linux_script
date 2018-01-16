@@ -11,3 +11,4 @@ set smarttab
 set softtabstop=4
 set encoding=utf-8
 set autoread
+set fileformats=unix
